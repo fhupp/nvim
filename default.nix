@@ -1,23 +1,25 @@
-{ inputs }:
-final: prev:
-with final.pkgs.lib;
+{
+  system ? builtins.currentSystem,
+  nixpkgs ? <nixos/nixpkgs>,
+  pkgs ? import nixpkgs,
+  lib ? pkgs.lib,
+}:
 let
-  pkgs = final;
+  mkNvimPlugin =
+    src: pname:
+    pkgs.vimUtils.buildVimPlugin {
+      inherit pname src;
+      version = src.lastModifiedDate;
+    };
 
-  pkgs-locked = inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-
-  mkNvimPlugin = import ./mkNvimPlugin.nix {
-    inherit (pkgs) vimUtils;
-  };
+  pkgs-locked = nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 
   mkNeovim = pkgs.callPackage ./mkNeovim.nix {
     inherit (pkgs-locked) wrapNeovimUnstable neovimUtils;
   };
 
-  all-plugins = with pkgs.vimPlugins; [
+  plugins = with pkgs.vimPlugins; [
     nvim-treesitter.withAllGrammars
-
-    firenvim
 
     # Lazy Loading
     lze
@@ -30,6 +32,8 @@ let
     image-nvim
 
     telescope-nvim
+
+    neorg
 
     # Git
     gitsigns-nvim
@@ -71,6 +75,7 @@ let
 
     # Rust
     crates-nvim
+    rustaceanvim
 
     (mkNvimPlugin inputs.direnv-nvim-src "direnv.nvim")
     (mkNvimPlugin inputs.neominimap-nvim-src "neominimap.nvim")
@@ -95,7 +100,6 @@ let
 in
 {
   nvim-wrapped = mkNeovim {
-    plugins = all-plugins;
-    inherit extraPackages;
+    inherit extraPackages plugins;
   };
 }

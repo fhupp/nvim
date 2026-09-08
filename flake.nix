@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
     # gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
 
     neovim = {
@@ -27,40 +26,51 @@
     };
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    flake-utils,
-    neovim,
-    ...
-  }: let
-    systems = builtins.attrNames nixpkgs.legacyPackages;
-    neovim-overlay = import ./neovim-overlay.nix {inherit inputs;};
-  in
-    flake-utils.lib.eachSystem systems (
-      system: let
-        pkgs = import nixpkgs {
-          # config.allowUnfree = true;
-          system = "${system}";
-          overlays = [neovim.overlays.default neovim-overlay];
-        };
-      in {
-        packages = rec {
-          nvim = pkgs.nvim-pkg;
-          default = nvim;
-        };
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      neovim,
+      ...
+    }:
+    let
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
 
-        apps = rec {
-          nvim = {
-            type = "app";
-            program = "${pkgs.nvim-pkg}/bin/nvim";
+      eachSystem = nixpkgs.lib.genAttrs systems;
+
+      neovim-overlay = import ./neovim-overlay.nix { inherit inputs; };
+    in
+    {
+      packages = eachSystem (
+        system:
+        let
+          pkgs = import nixpkgs {
+            # config.allowUnfree = true;
+            inherit system;
+            overlays = [
+              neovim.overlays.default
+              neovim-overlay
+            ];
           };
-
+        in
+        rec {
+          nvim = pkgs.nvim-wrapped;
           default = nvim;
+        }
+      );
+
+      apps = eachSystem (system: rec {
+        nvim = {
+          type = "app";
+          program = "${self.packages.${system}.nvim}/bin/nvim";
         };
-      }
-    )
-    // {
+
+        default = nvim;
+      });
+
       overlays.default = neovim-overlay;
     };
 }
