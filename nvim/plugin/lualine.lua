@@ -252,10 +252,12 @@ local function load()
     lualine.setup(config)
 end
 
-require("lze").load({
-    "lualine.nvim",
-    event = "VimEnter",
-    load = function(_name)
-        vim.schedule(load)
-    end
-})
+if not vim.g.firenvim then
+    require("lze").load({
+        "lualine.nvim",
+        event = "VimEnter",
+        load = function(_name)
+            vim.schedule(load)
+        end
+    })
+end
