@@ -38,7 +38,7 @@ cmd.filetype('plugin', 'indent', 'on')
 vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
 
 if vim.g.firenvim then
-  vim.opt.gui_font = "Hack Nerd Font"
+    vim.opt.gui_font = "Hack Nerd Font"
 end
 
 vim.lsp.enable({

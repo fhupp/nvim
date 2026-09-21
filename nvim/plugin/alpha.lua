@@ -9,7 +9,6 @@ local file_icons = {
     provider = "devicons",
 }
 
--- Gro-goroth
 local header = {
     type = "text",
 
@@ -19,10 +18,13 @@ local header = {
     },
 
     val = {
-        "▗▖  ▗▖▄   ▄ ▄ ▄▄▄▄",
-        "▐▛▚▖▐▌█   █ ▄ █ █ █",
-        "▐▌ ▝▜▌ ▀▄▀  █ █   █",
-        "▐▌  ▐▌      █",
+        -- "▗▖  ▗▖▄   ▄ ▄ ▄▄▄▄",
+        -- "▐▛▚▖▐▌█   █ ▄ █ █ █",
+        -- "▐▌ ▝▜▌ ▀▄▀  █ █   █",
+        -- "▐▌  ▐▌      █",
+        "Neo         ",
+        " VIsual ex  ",
+        "  iMproved  ",
     },
 }
 
