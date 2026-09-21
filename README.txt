@@ -1,3 +1,3 @@
 A Neovim config based roughly upon kickstart-nix.nvim.
 
-It can be installed as a flake, and used through an overlay exporting the package nvim.
+You can install this neovim config as a flake or through the provided default.nix.

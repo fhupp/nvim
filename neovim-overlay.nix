@@ -94,7 +94,7 @@ let
   ];
 in
 {
-  nvim-wrapped = mkNeovim {
+  nvim = mkNeovim {
     plugins = all-plugins;
     inherit extraPackages;
   };

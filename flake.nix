@@ -57,7 +57,8 @@
           };
         in
         rec {
-          nvim = pkgs.nvim-wrapped;
+          inherit (pkgs) nvim;
+
           default = nvim;
         }
       );
@@ -69,6 +70,10 @@
         };
 
         default = nvim;
+      });
+
+      nixosModules = eachSystem (system: {
+        default = import ./nixosModule.nix { inherit (self.packages.${system}) nvim; };
       });
 
       overlays.default = neovim-overlay;
