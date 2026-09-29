@@ -117,7 +117,7 @@ local function load()
             return ('[' .. mode_map[vim.fn.mode()] .. ']') or '[UNKNOWN]'
         end,
         color = function()
-            -- auto change color according to neovims mode
+            -- auto change color according to neovim's mode
             local mode_color = {
                 n = colors.red,
                 i = colors.green,

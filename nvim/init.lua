@@ -18,16 +18,18 @@ opt.expandtab = true
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
-opt.foldenable = true
 opt.history = 2000
 opt.nrformats = 'bin,hex'
 opt.undofile = true
 opt.splitright = true
 opt.splitbelow = true
-opt.cmdheight = 0
+opt.cmdheight = 1
+
+opt.colorcolumn = '100'
 
 opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-opt.colorcolumn = '100'
+opt.foldenable = true
+opt.foldcolumn = "1"
 
 opt.laststatus = 3
 

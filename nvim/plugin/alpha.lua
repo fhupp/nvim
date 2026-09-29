@@ -120,7 +120,7 @@ local leader = "SPC"
 --- @param keybind string? optional
 --- @param keybind_opts table? optional
 local function button(sc, txt, keybind, keybind_opts)
-    local sc_ = sc:gsub("%s", ""):gsub(leader, "<leader>")
+    local sc_ = sc:gsub("%s", "") -- :gsub(leader, "<leader>")
 
     local opts = {
         position = "center",
@@ -128,11 +128,11 @@ local function button(sc, txt, keybind, keybind_opts)
         cursor = 3,
         width = 60,
         align_shortcut = "right",
-        hl_shortcut = "Keyword",
+        hl_shortcut = "Function",
         shrink_margin = false,
     }
     if keybind then
-        keybind_opts = vim.F.if_nil(keybind_opts, { noremap = true, silent = true, nowait = true })
+        keybind_opts = vim.nonnil(keybind_opts, { noremap = true, silent = true, nowait = true })
         opts.keymap = { "n", sc_, keybind, keybind_opts }
     end
 
@@ -149,10 +149,27 @@ local function button(sc, txt, keybind, keybind_opts)
     }
 end
 
+--- @param file string
+--- @return string
+local function shorten_path(file)
+    return file:sub(file:match("(.*/)(.*/)"):len(), file:len())
+end
+
+--- @param file string
+--- @return string
+local function fnname(file)
+    return shorten_path(vim.fs.dirname(file)) .. "/" .. vim.fs.basename(file)
+end
+
+
+--- @param fn string File name
+--- @param short_fn string? A shortened file name
 local function file_button(fn, sc, short_fn, autocd)
-    short_fn = vim.F.if_nil(short_fn, fn)
+    short_fn = vim.nonnil(short_fn, fn) or shorten_path(fn)
+
     local ico_txt
     local fb_hl = {}
+
     if file_icons.enabled then
         local ico, hl = utils.get_icon(file_icons, fn)
         local hl_option_type = type(file_icons.highlight)
@@ -178,19 +195,10 @@ local function file_button(fn, sc, short_fn, autocd)
     return file_button_el
 end
 
-
---- @param file string
-local function shorten_path(file)
-    return file:sub(file:match("(.*/)(.*/)"):len(), file:len())
-end
-
-local function fnname(file)
-    return ".." .. shorten_path(vim.fs.dirname(file)) .. "/" .. vim.fs.basename(file)
-end
-
-local function mru(start, cwd, items_number, opts)
+--- @param items_number number?
+local function git_mru(start, cwd, items_number, opts)
     opts = opts or mru_opts
-    items_number = vim.F.if_nil(items_number, 10)
+    items_number = items_number or 10
     local found = utils.get_git_files(cwd, items_number, opts.ignore)
 
     local tbl = {}
@@ -209,11 +217,33 @@ local function mru(start, cwd, items_number, opts)
     }
 end
 
+--- A list of very important sayings.
+--- @type List<string | table<integer, string>>
+local quotes = {
+  "\"There is Still Time\"",
+  "\"A Monad is a Monoid in the Category of Endofunctors\"",
+  "Funtor? I hardly know er!",
+  "∞-groupoids, yum",
+}
+
+local quote = {
+  type = "text",
+
+    opts = {
+        hl = "Comment",
+        position = "center",
+    },
+
+    val = quotes[math.random(1, #quotes)],
+}
+
 local startpage = {
     layout = {
         { type = "padding", val = 2 },
         header,
         { type = "padding", val = 2 },
+        quote,
+        { type = "padding", val = 3 },
         find_button,
         { type = "padding", val = 1 },
         new_file_button,
@@ -223,7 +253,7 @@ local startpage = {
         {
             type = "group",
             val = function()
-                return { mru(0) }
+                return { git_mru(10) }
             end,
         },
     },
