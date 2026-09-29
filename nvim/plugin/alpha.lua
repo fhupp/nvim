@@ -22,9 +22,9 @@ local header = {
         -- "▐▛▚▖▐▌█   █ ▄ █ █ █",
         -- "▐▌ ▝▜▌ ▀▄▀  █ █   █",
         -- "▐▌  ▐▌      █",
-        "Neo         ",
-        " VIsual ex  ",
-        "  iMproved  ",
+        "   Neo         ",
+        "    VIsual ex  ",
+        "     iMproved  ",
     },
 }
 
@@ -211,11 +211,13 @@ end
 
 local startpage = {
     layout = {
-        { type = "padding", val = 1 },
+        { type = "padding", val = 2 },
         header,
         { type = "padding", val = 2 },
         find_button,
+        { type = "padding", val = 1 },
         new_file_button,
+        { type = "padding", val = 1 },
         quit_button,
         { type = "padding", val = 1 },
         {
