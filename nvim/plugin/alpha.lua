@@ -28,16 +28,18 @@ local header = {
     },
 }
 
-local find_button = {
+--- @param label string
+local function top_button(label, cmd, shortcut)
+  return {
     type = "button",
-    val = "  Find File",
-    on_press = function() vim.cmd("Telescope find_files") end,
+    val = label,
+    on_press = function() vim.cmd(cmd) end,
     opts = {
-        shortcut = "f",
+        shortcut = shortcut,
         keymap = {
             "n",
-            "f",
-            "<cmd>Telescope find_files<cr>",
+            shortcut,
+            "<cmd>" .. cmd .. "<cr>",
             {
                 noremap = true,
                 silent = true,
@@ -50,35 +52,64 @@ local find_button = {
         width = 60,
 
         align_shortcut = "right",
-        hl_shortcut = "Keyword",
+        hl_shortcut = "Function",
     },
 }
+end
 
-local new_file_button = {
-    type = "button",
-    val = "  New File",
-    on_press = function() vim.cmd [[ene]] end,
-    opts = {
-        shortcut = "n",
-        keymap = {
-            "n",
-            "n",
-            ":ene <BAR> startinsert <CR>",
-            {
-                noremap = true,
-                silent = true,
-                nowait = true,
-            }
-        },
+local find_button = top_button("  Find File", "Telescope find_files", "f")
+-- {
+--     type = "button",
+--     val = "  Find File",
+--     on_press = function() vim.cmd("Telescope find_files") end,
+--     opts = {
+--         shortcut = "f",
+--         keymap = {
+--             "n",
+--             "f",
+--             "<cmd>Telescope find_files<cr>",
+--             {
+--                 noremap = true,
+--                 silent = true,
+--                 nowait = true,
+--             }
+--         },
+--
+--         position = "center",
+--         cursor = 3,
+--         width = 60,
+--
+--         align_shortcut = "right",
+--         hl_shortcut = "Keyword",
+--     },
+-- }
 
-        position = "center",
-        cursor = 3,
-        width = 60,
-
-        align_shortcut = "right",
-        hl_shortcut = "Keyword",
-    },
-}
+local new_file_button = top_button("  New File", "ene", "n")
+-- {
+--     type = "button",
+--     val = "  New File",
+--     on_press = function() vim.cmd [[ene]] end,
+--     opts = {
+--         shortcut = "n",
+--         keymap = {
+--             "n",
+--             "n",
+--             ":ene <BAR> startinsert <CR>",
+--             {
+--                 noremap = true,
+--                 silent = true,
+--                 nowait = true,
+--             }
+--         },
+--
+--         position = "center",
+--         cursor = 3,
+--         width = 60,
+--
+--         align_shortcut = "right",
+--         hl_shortcut = "Keyword",
+--     },
+-- }
 
 local quit_button = {
     type = "button",
@@ -113,18 +144,18 @@ local mru_opts = {
     autocd = false
 }
 
-local leader = "SPC"
+local alphaleader = "m"
 
 --- @param sc string
 --- @param txt string
 --- @param keybind string? optional
 --- @param keybind_opts table? optional
 local function button(sc, txt, keybind, keybind_opts)
-    local sc_ = sc:gsub("%s", "") -- :gsub(leader, "<leader>")
+    local short = sc:gsub("%s", ""):gsub("<alphaleader>", alphaleader)
 
     local opts = {
         position = "center",
-        shortcut = sc,
+        shortcut = sc:gsub("<alphaleader>", alphaleader),
         cursor = 3,
         width = 60,
         align_shortcut = "right",
@@ -133,7 +164,7 @@ local function button(sc, txt, keybind, keybind_opts)
     }
     if keybind then
         keybind_opts = vim.nonnil(keybind_opts, { noremap = true, silent = true, nowait = true })
-        opts.keymap = { "n", sc_, keybind, keybind_opts }
+        opts.keymap = { "n", short, keybind, keybind_opts }
     end
 
     local function on_press()
@@ -185,8 +216,10 @@ local function file_button(fn, sc, short_fn, autocd)
     else
         ico_txt = ""
     end
+
     local cd_cmd = (autocd and " | cd %:p:h" or "")
     local file_button_el = button(sc, ico_txt .. short_fn, "<cmd>e " .. vim.fn.fnameescape(fn) .. cd_cmd .. " <CR>")
+
     local fn_start = short_fn:match(".*[/\\]")
     if fn_start ~= nil then
         table.insert(fb_hl, { "Comment", #ico_txt, #fn_start + #ico_txt })
@@ -196,7 +229,7 @@ local function file_button(fn, sc, short_fn, autocd)
 end
 
 --- @param items_number number?
-local function git_mru(start, cwd, items_number, opts)
+local function git_mru(start, items_number, cwd, opts)
     opts = opts or mru_opts
     items_number = items_number or 10
     local found = utils.get_git_files(cwd, items_number, opts.ignore)
@@ -206,7 +239,7 @@ local function git_mru(start, cwd, items_number, opts)
     for i, fn in ipairs(found) do
         local short_fn = fnname(fn)
 
-        local file_button_el = file_button(fn, tostring(i + start - 1), short_fn, opts.autocd)
+        local file_button_el = file_button(fn,tostring(i + start - 1) .. " <alphaleader>", short_fn, opts.autocd)
         tbl[i] = file_button_el
     end
 
@@ -224,6 +257,7 @@ local quotes = {
   "\"A Monad is a Monoid in the Category of Endofunctors\"",
   "Funtor? I hardly know er!",
   "∞-groupoids, yum",
+  "Uninstall French: sudo rm -fr /"
 }
 
 local quote = {
@@ -234,7 +268,9 @@ local quote = {
         position = "center",
     },
 
-    val = quotes[math.random(1, #quotes)],
+    val = function ()
+      return quotes[math.random(1, #quotes)]
+    end,
 }
 
 local startpage = {
@@ -253,7 +289,7 @@ local startpage = {
         {
             type = "group",
             val = function()
-                return { git_mru(10) }
+                return { git_mru(0, 30) }
             end,
         },
     },
