@@ -163,7 +163,7 @@ local function button(sc, txt, keybind, keybind_opts)
         shrink_margin = false,
     }
     if keybind then
-        keybind_opts = vim.nonnil(keybind_opts, { noremap = true, silent = true, nowait = true })
+        keybind_opts = keybind_opts or { noremap = true, silent = true, nowait = true }
         opts.keymap = { "n", short, keybind, keybind_opts }
     end
 
