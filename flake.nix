@@ -3,7 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    # gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    gen-luarc = {
+      url = "github:mrcjkb/nix-gen-luarc-json";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
 
     neovim = {
       url = "github:nix-community/neovim-nightly-overlay";
