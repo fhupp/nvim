@@ -30,31 +30,31 @@ local header = {
 
 --- @param label string
 local function top_button(label, cmd, shortcut)
-  return {
-    type = "button",
-    val = label,
-    on_press = function() vim.cmd(cmd) end,
-    opts = {
-        shortcut = shortcut,
-        keymap = {
-            "n",
-            shortcut,
-            "<cmd>" .. cmd .. "<cr>",
-            {
-                noremap = true,
-                silent = true,
-                nowait = true,
-            }
+    return {
+        type = "button",
+        val = label,
+        on_press = function() vim.cmd(cmd) end,
+        opts = {
+            shortcut = shortcut,
+            keymap = {
+                "n",
+                shortcut,
+                "<cmd>" .. cmd .. "<cr>",
+                {
+                    noremap = true,
+                    silent = true,
+                    nowait = true,
+                }
+            },
+
+            position = "center",
+            cursor = 3,
+            width = 60,
+
+            align_shortcut = "right",
+            hl_shortcut = "Function",
         },
-
-        position = "center",
-        cursor = 3,
-        width = 60,
-
-        align_shortcut = "right",
-        hl_shortcut = "Function",
-    },
-}
+    }
 end
 
 local find_button = top_button("  Find File", "Telescope find_files", "f")
@@ -196,7 +196,7 @@ end
 --- @param fn string File name
 --- @param short_fn string? A shortened file name
 local function file_button(fn, sc, short_fn, autocd)
-    short_fn = vim.nonnil(short_fn, fn) or shorten_path(fn)
+    short_fn = short_fn or shorten_path(fn)
 
     local ico_txt
     local fb_hl = {}
@@ -229,6 +229,7 @@ local function file_button(fn, sc, short_fn, autocd)
 end
 
 --- @param items_number number?
+--- @param opts table?
 local function git_mru(start, items_number, cwd, opts)
     opts = opts or mru_opts
     items_number = items_number or 10
@@ -239,7 +240,7 @@ local function git_mru(start, items_number, cwd, opts)
     for i, fn in ipairs(found) do
         local short_fn = fnname(fn)
 
-        local file_button_el = file_button(fn,tostring(i + start - 1) .. " <alphaleader>", short_fn, opts.autocd)
+        local file_button_el = file_button(fn, tostring(i + start - 1) .. " <alphaleader>", short_fn, opts.autocd)
         tbl[i] = file_button_el
     end
 
@@ -253,23 +254,23 @@ end
 --- A list of very important sayings.
 --- @type List<string | table<integer, string>>
 local quotes = {
-  "\"There is Still Time\"",
-  "\"A Monad is a Monoid in the Category of Endofunctors\"",
-  "Funtor? I hardly know er!",
-  "∞-groupoids, yum",
-  "Uninstall French: sudo rm -fr /"
+    "\"There is Still Time\"",
+    "\"A Monad is a Monoid in the Category of Endofunctors\"",
+    "Funtor? I hardly know er!",
+    "∞-groupoids, yum",
+    "Uninstall French: sudo rm -fr /"
 }
 
 local quote = {
-  type = "text",
+    type = "text",
 
     opts = {
         hl = "Comment",
         position = "center",
     },
 
-    val = function ()
-      return quotes[math.random(1, #quotes)]
+    val = function()
+        return quotes[math.random(1, #quotes)]
     end,
 }
 
