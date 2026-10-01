@@ -256,7 +256,7 @@ end
 local quotes = {
     "\"There is Still Time\"",
     "\"A Monad is a Monoid in the Category of Endofunctors\"",
-    "Funtor? I hardly know er!",
+    "Functor? I hardly know er!",
     "∞-groupoids, yum",
     "Uninstall French: sudo rm -fr /"
 }
