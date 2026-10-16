@@ -4,8 +4,6 @@ local utils = require("alpha.utils")
 local file_icons = {
     enabled = true,
     highlight = true,
-    -- available: devicons, mini, to use nvim-web-devicons or mini.icons
-    -- if provider not loaded and enabled is true, it will try to use another provider
     provider = "devicons",
 }
 
@@ -18,18 +16,14 @@ local header = {
     },
 
     val = {
-        -- "▗▖  ▗▖▄   ▄ ▄ ▄▄▄▄",
-        -- "▐▛▚▖▐▌█   █ ▄ █ █ █",
-        -- "▐▌ ▝▜▌ ▀▄▀  █ █   █",
-        -- "▐▌  ▐▌      █",
-        "   Neo         ",
-        "    VIsual ex  ",
-        "     iMproved  ",
+        "Neo                ",
+        " VIsual extended ed",
+        "  iMproved         ",
     },
 }
 
 --- @param label string
-local function top_button(label, cmd, shortcut)
+local function menu_button(label, cmd, shortcut)
     return {
         type = "button",
         val = label,
@@ -53,89 +47,11 @@ local function top_button(label, cmd, shortcut)
 
             align_shortcut = "right",
             hl_shortcut = "Function",
+
+            shrink_margin = false,
         },
     }
 end
-
-local find_button = top_button("  Find File", "Telescope find_files", "f")
--- {
---     type = "button",
---     val = "  Find File",
---     on_press = function() vim.cmd("Telescope find_files") end,
---     opts = {
---         shortcut = "f",
---         keymap = {
---             "n",
---             "f",
---             "<cmd>Telescope find_files<cr>",
---             {
---                 noremap = true,
---                 silent = true,
---                 nowait = true,
---             }
---         },
---
---         position = "center",
---         cursor = 3,
---         width = 60,
---
---         align_shortcut = "right",
---         hl_shortcut = "Keyword",
---     },
--- }
-
-local new_file_button = top_button("  New File", "ene", "n")
--- {
---     type = "button",
---     val = "  New File",
---     on_press = function() vim.cmd [[ene]] end,
---     opts = {
---         shortcut = "n",
---         keymap = {
---             "n",
---             "n",
---             ":ene <BAR> startinsert <CR>",
---             {
---                 noremap = true,
---                 silent = true,
---                 nowait = true,
---             }
---         },
---
---         position = "center",
---         cursor = 3,
---         width = 60,
---
---         align_shortcut = "right",
---         hl_shortcut = "Keyword",
---     },
--- }
-
-local quit_button = {
-    type = "button",
-    val = "  Quit",
-    on_press = function() vim.cmd [[qa]] end,
-    opts = {
-        shortcut = "q",
-        keymap = {
-            "n",
-            "q",
-            ":qa<CR>",
-            {
-                noremap = true,
-                silent = true,
-                nowait = true,
-            }
-        },
-
-        align_shortcut = "right",
-        hl_shortcut = "Keyword",
-
-        position = "center",
-        cursor = 3,
-        width = 60,
-    },
-}
 
 local mru_opts = {
     ignore = function(path, ext)
@@ -277,20 +193,25 @@ local quote = {
 local startpage = {
     layout = {
         { type = "padding", val = 2 },
+
         header,
+
         { type = "padding", val = 2 },
+
         quote,
+
         { type = "padding", val = 3 },
-        find_button,
+
+        menu_button("  Find File", "Telescope find_files", "f"),
+        menu_button("  New File", "ene", "n"),
+        menu_button("  Quit", "qa", "q"),
+
         { type = "padding", val = 1 },
-        new_file_button,
-        { type = "padding", val = 1 },
-        quit_button,
-        { type = "padding", val = 1 },
+
         {
             type = "group",
             val = function()
-                return { git_mru(0, 30) }
+                return { git_mru(0, 10) }
             end,
         },
     },

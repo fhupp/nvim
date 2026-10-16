@@ -17,7 +17,10 @@ let
   all-plugins = with pkgs.vimPlugins; [
     nvim-treesitter.withAllGrammars
 
-    firenvim
+    nvim-web-devicons
+
+    (mkNvimPlugin inputs.direnv-nvim-src "direnv.nvim")
+    (mkNvimPlugin inputs.neominimap-nvim-src "neominimap.nvim")
 
     # Lazy Loading
     lze
@@ -26,20 +29,18 @@ let
     # Colorschemes
     vim-moonfly-colors
 
+    # Picker
+    telescope-nvim
+
     # Images
     image-nvim
-
-    telescope-nvim
 
     # Git
     gitsigns-nvim
     neogit
     mini-diff
 
-    lsp-format-nvim
-
-    nvim-web-devicons
-
+    # QoL
     autosave-nvim
 
     # Completions
@@ -58,9 +59,15 @@ let
     oil-nvim
     neo-tree-nvim
 
+    # Browser Integration
+    firenvim
+
+    # LSP
+    lsp-format-nvim
+
     # LaTeX
     vimtex
-    (mkNvimPlugin inputs.ltex-ls-nvim-src "ltex-ls.nvim")
+    # (mkNvimPlugin inputs.ltex-ls-nvim-src "ltex-ls.nvim")
     ltex_extra-nvim
 
     # Haskell
@@ -71,9 +78,6 @@ let
 
     # Rust
     crates-nvim
-
-    (mkNvimPlugin inputs.direnv-nvim-src "direnv.nvim")
-    (mkNvimPlugin inputs.neominimap-nvim-src "neominimap.nvim")
   ];
 
   extraPackages = with pkgs; [
@@ -81,16 +85,27 @@ let
     ## Nix
     nil
     nixd
+
     ## Lua
     lua-language-server
+
     ## LaTeX
     ltex-ls
+
     ## Rust
     rust-analyzer
+
     ## Haskell
     haskellPackages.haskell-language-server
+
     ## Zig
     zls
+
+    ## Yaml
+    yaml-language-server
+
+    ## Java
+    jdt-language-server
   ];
 in
 {
