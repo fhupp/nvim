@@ -22,11 +22,6 @@
       flake = false;
     };
 
-    ltex-ls-nvim-src = {
-      url = "github:vigoux/ltex-ls.nvim";
-      flake = false;
-    };
-
     neominimap-nvim-src = {
       url = "github:Isrothy/neominimap.nvim";
       flake = false;

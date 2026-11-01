@@ -142,22 +142,6 @@
         "type": "github"
       }
     },
-    "ltex-ls-nvim-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1725970128,
-        "narHash": "sha256-uiDzru2+A01m5CONN+z9URB+Skw6ESXWl0FSAJxgzqg=",
-        "owner": "vigoux",
-        "repo": "ltex-ls.nvim",
-        "rev": "968eac261279d88d7f1ed556aa2dbc535a7489fe",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vigoux",
-        "repo": "ltex-ls.nvim",
-        "type": "github"
-      }
-    },
     "luvit-meta": {
       "flake": false,
       "locked": {
@@ -280,7 +264,6 @@
         "direnv-nvim-src": "direnv-nvim-src",
         "flake-parts": "flake-parts",
         "gen-luarc": "gen-luarc",
-        "ltex-ls-nvim-src": "ltex-ls-nvim-src",
         "neominimap-nvim-src": "neominimap-nvim-src",
         "neovim": "neovim",
         "nixpkgs": "nixpkgs"

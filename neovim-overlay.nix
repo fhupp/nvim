@@ -68,7 +68,6 @@ let
     # LaTeX
     vimtex
     # (mkNvimPlugin inputs.ltex-ls-nvim-src "ltex-ls.nvim")
-    ltex_extra-nvim
 
     # Haskell
     haskell-tools-nvim
@@ -88,9 +87,6 @@ let
 
     ## Lua
     lua-language-server
-
-    ## LaTeX
-    ltex-ls
 
     ## Rust
     rust-analyzer
