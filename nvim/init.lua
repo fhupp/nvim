@@ -48,6 +48,7 @@ vim.lsp.enable({
     "nil",
     "nixd",
     "haskell-language-server",
+    "rust_analyzer",
     "crates",
 })
 
