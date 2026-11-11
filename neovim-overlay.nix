@@ -20,7 +20,7 @@ let
     nvim-web-devicons
 
     (mkNvimPlugin inputs.direnv-nvim-src "direnv.nvim")
-    (mkNvimPlugin inputs.neominimap-nvim-src "neominimap.nvim")
+    # (mkNvimPlugin inputs.neominimap-nvim-src "neominimap.nvim")
 
     # Lazy Loading
     lze
@@ -55,19 +55,18 @@ let
     # Startpage
     alpha-nvim
 
+    # Browser Integration
+    firenvim
+
     # File Systems
     oil-nvim
     neo-tree-nvim
-
-    # Browser Integration
-    firenvim
 
     # LSP
     lsp-format-nvim
 
     # LaTeX
     vimtex
-    # (mkNvimPlugin inputs.ltex-ls-nvim-src "ltex-ls.nvim")
 
     # Haskell
     haskell-tools-nvim

@@ -2,6 +2,7 @@ vim.loader.enable()
 
 local cmd = vim.cmd
 local opt = vim.o
+local lsp = vim.lsp
 
 opt.number = true
 opt.relativenumber = true
@@ -36,19 +37,16 @@ opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 opt.foldenable = true
 opt.foldcolumn = "1"
 
-opt.laststatus = 3
+opt.list = true
+opt.listchars = "tab:. ,leadtab:. ,leadmultispace:. ,trail:*"
 
-vim.diagnostic.config({ virtual_text = true })
+opt.laststatus = 3
 
 cmd.filetype('plugin', 'indent', 'on')
 
 vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
 
-if vim.g.firenvim then
-    vim.opt.gui_font = "Hack Nerd Font"
-end
-
-vim.lsp.enable({
+lsp.enable({
     "lua_ls",
     "nil",
     "nixd",
@@ -57,10 +55,18 @@ vim.lsp.enable({
     "crates",
 })
 
-vim.lsp.inlay_hint.enable(true)
+lsp.inlay_hint.enable(true)
 
 vim.diagnostic.config({
     severity_sort = true,
+    virtual_text = true,
 })
 
--- TODO: Add Neovide Config
+
+if vim.g.firenvim then
+    opt.guifont = "JetBrainsMonoNL Nerd Font:h18"
+end
+
+if vim.g.neovide then
+    opt.guifont = "Uiua386:h11"
+end

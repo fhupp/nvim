@@ -1,11 +1,27 @@
 local alpha = require("alpha")
 local utils = require("alpha.utils")
 
+local alphaleader = "m"
+
 local file_icons = {
     enabled = true,
     highlight = true,
     provider = "devicons",
 }
+
+local header_text = {
+    " Neo                 ",
+    "  VIsual extended ed ",
+    "   iMproved          ",
+}
+if vim.g.neovide then
+    header_text = {
+        " NEO         ",
+        "    VIsual   ",
+        " extenDed ed ",
+        " improvEd    ",
+    }
+end
 
 local header = {
     type = "text",
@@ -15,11 +31,7 @@ local header = {
         position = "center",
     },
 
-    val = {
-        "Neo                ",
-        " VIsual extended ed",
-        "  iMproved         ",
-    },
+    val = header_text,
 }
 
 --- @param label string
@@ -59,8 +71,6 @@ local mru_opts = {
     end,
     autocd = false
 }
-
-local alphaleader = "m"
 
 --- @param sc string
 --- @param txt string
@@ -107,7 +117,6 @@ end
 local function fnname(file)
     return shorten_path(vim.fs.dirname(file)) .. "/" .. vim.fs.basename(file)
 end
-
 
 --- @param fn string File name
 --- @param short_fn string? A shortened file name
