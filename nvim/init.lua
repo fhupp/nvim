@@ -14,15 +14,20 @@ opt.hlsearch = true
 opt.spell = true
 opt.spelllang = 'en'
 
+-- Disable spellcheck in the terminal
+vim.api.nvim_create_autocmd("TermOpen", { pattern = "term://*", command = "setlocal nospell" })
+
 opt.expandtab = true
 opt.tabstop = 2
 opt.softtabstop = 2
+
 opt.shiftwidth = 2
 opt.history = 2000
 opt.nrformats = 'bin,hex'
 opt.undofile = true
 opt.splitright = true
 opt.splitbelow = true
+
 opt.cmdheight = 1
 
 opt.colorcolumn = '100'
@@ -50,6 +55,12 @@ vim.lsp.enable({
     "haskell-language-server",
     "rust_analyzer",
     "crates",
+})
+
+vim.lsp.inlay_hint.enable(true)
+
+vim.diagnostic.config({
+    severity_sort = true,
 })
 
 -- TODO: Add Neovide Config
