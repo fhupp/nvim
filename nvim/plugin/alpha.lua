@@ -14,12 +14,12 @@ local header_text = {
     "  VIsual extended ed ",
     "   iMproved          ",
 }
+
 if vim.g.neovide then
     header_text = {
-        " NEO         ",
-        "    VIsual   ",
-        " extenDed ed ",
-        " improvEd    ",
+        " NEO                   ",
+        "    VIsual extendeD ed ",
+        "             improvEd   ",
     }
 end
 

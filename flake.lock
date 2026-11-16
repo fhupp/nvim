@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "direnv-nvim-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1782680771,
-        "narHash": "sha256-b5PpmkYWaDGLNcu+36tRR5ycATHYBjs9WrV8/jfmooQ=",
-        "owner": "NotAShelf",
-        "repo": "direnv.nvim",
-        "rev": "9258f9f10c4c729d8296fce0e3ecb12543daad06",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NotAShelf",
-        "repo": "direnv.nvim",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -158,22 +142,6 @@
         "type": "github"
       }
     },
-    "neominimap-nvim-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1775964467,
-        "narHash": "sha256-EcV/mdleyopQsJ/t/Whl6Yf/2ORb9rnhHuc2Ue1E1Bw=",
-        "owner": "Isrothy",
-        "repo": "neominimap.nvim",
-        "rev": "0676085d898019f06044923934e38663f5efa290",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Isrothy",
-        "repo": "neominimap.nvim",
-        "type": "github"
-      }
-    },
     "neovim": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -261,10 +229,8 @@
     },
     "root": {
       "inputs": {
-        "direnv-nvim-src": "direnv-nvim-src",
         "flake-parts": "flake-parts",
         "gen-luarc": "gen-luarc",
-        "neominimap-nvim-src": "neominimap-nvim-src",
         "neovim": "neovim",
         "nixpkgs": "nixpkgs"
       }

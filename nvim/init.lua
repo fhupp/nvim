@@ -62,9 +62,13 @@ vim.diagnostic.config({
     virtual_text = true,
 })
 
+if vim.g.started_by_firenvim then
+    opt.guifont = "JetBrainsMonoNL Nerd Font:h20"
 
-if vim.g.firenvim then
-    opt.guifont = "JetBrainsMonoNL Nerd Font:h18"
+    vim.g.firenvim_config.localSettings['.*'] = {
+        cmdline = 'neovim',
+        content = 'html'
+    }
 end
 
 if vim.g.neovide then

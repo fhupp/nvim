@@ -16,16 +16,6 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    direnv-nvim-src = {
-      url = "github:NotAShelf/direnv.nvim";
-      flake = false;
-    };
-
-    neominimap-nvim-src = {
-      url = "github:Isrothy/neominimap.nvim";
-      flake = false;
-    };
   };
 
   outputs =

@@ -1,3 +1,5 @@
+local navic = require("nvim-navic")
+
 ---@type vim.lsp.Config
 return {
     cmd = { "lua-language-server" },
@@ -20,13 +22,13 @@ return {
             hint = { enable = true, semicolon = 'Disable' },
 
             diagnostics = {
-              globals = {
-                "vim",
-              },
+                globals = {
+                    "vim",
+                },
             },
 
             runtime = {
-              version = "LuaJIT",
+                version = "LuaJIT",
             },
 
             workspace = {
@@ -35,4 +37,8 @@ return {
             },
         },
     },
+
+    on_attach = function(client, bufnr)
+        navic.attach(client, bufnr)
+    end,
 }

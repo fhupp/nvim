@@ -1,4 +1,4 @@
-{ inputs }:
+{ inputs, ... }:
 final: prev:
 with final.pkgs.lib;
 let
@@ -19,8 +19,11 @@ let
 
     nvim-web-devicons
 
-    (mkNvimPlugin inputs.direnv-nvim-src "direnv.nvim")
-    # (mkNvimPlugin inputs.neominimap-nvim-src "neominimap.nvim")
+    direnv-nvim
+
+    tagbar
+
+    hydra-nvim
 
     # Lazy Loading
     lze
@@ -51,6 +54,7 @@ let
 
     # Status Line
     lualine-nvim
+    nvim-navic
 
     # Startpage
     alpha-nvim

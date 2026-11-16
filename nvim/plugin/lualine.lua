@@ -1,9 +1,11 @@
+local lualine = require('lualine')
+local navic = require("nvim-navic")
+
 -- Modified Eviline
 local function load()
     -- Eviline config for lualine
     -- Author: shadmansaleh
     -- Credit: glepnir
-    local lualine = require('lualine')
 
     -- Color table for highlights
     -- stylua: ignore
@@ -58,6 +60,16 @@ local function load()
             -- These will be filled later
             lualine_c = {},
             lualine_x = {},
+
+        },
+        winbar = {
+            lualine_c = {
+                {
+                    "navic",
+                    color_correction = nil,
+                    navic_opts = nil
+                }
+            }
         },
         inactive_sections = {
             -- these are to remove the defaults
@@ -252,7 +264,7 @@ local function load()
     lualine.setup(config)
 end
 
-if not vim.g.firenvim then
+if not vim.g.started_by_firenvim then
     require("lze").load({
         "lualine.nvim",
         event = "VimEnter",

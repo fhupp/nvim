@@ -9,7 +9,7 @@
   wrapNeovimUnstable,
   neovimUtils,
 }:
-# with lib;
+with lib;
 let
   mkNvimPlugin = import ./mkNvimPlugin.nix {
     inherit vimUtils;
