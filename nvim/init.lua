@@ -64,9 +64,9 @@ vim.diagnostic.config({
 })
 
 if vim.g.started_by_firenvim then
-    require("lua.config.firenvim")
+    require("firenvim")
 end
 
 if vim.g.neovide then
-    opt.guifont = "Uiua386:h11"
+    require("neovide")
 end
