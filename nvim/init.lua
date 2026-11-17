@@ -3,6 +3,9 @@ vim.loader.enable()
 local cmd = vim.cmd
 local opt = vim.o
 local lsp = vim.lsp
+local api = vim.api
+
+vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
 
 opt.number = true
 opt.relativenumber = true
@@ -16,7 +19,7 @@ opt.spell = true
 opt.spelllang = 'en'
 
 -- Disable spellcheck in the terminal
-vim.api.nvim_create_autocmd("TermOpen", { pattern = "term://*", command = "setlocal nospell" })
+api.nvim_create_autocmd("TermOpen", { pattern = "term://*", command = "setlocal nospell" })
 
 opt.expandtab = true
 opt.tabstop = 2
@@ -44,8 +47,6 @@ opt.laststatus = 3
 
 cmd.filetype('plugin', 'indent', 'on')
 
-vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
-
 lsp.enable({
     "lua_ls",
     "nil",
@@ -63,12 +64,7 @@ vim.diagnostic.config({
 })
 
 if vim.g.started_by_firenvim then
-    opt.guifont = "JetBrainsMonoNL Nerd Font:h20"
-
-    vim.g.firenvim_config.localSettings['.*'] = {
-        cmdline = 'neovim',
-        content = 'html'
-    }
+    require("lua.config.firenvim")
 end
 
 if vim.g.neovide then

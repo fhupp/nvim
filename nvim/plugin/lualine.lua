@@ -65,11 +65,23 @@ local function load()
         winbar = {
             lualine_c = {
                 {
-                    "navic",
-                    color_correction = nil,
-                    navic_opts = nil
-                }
-            }
+                    'filename',
+                    cond = conditions.buffer_not_empty,
+                    color = { fg = colors.magenta, gui = 'bold' },
+                    padding = { left = 2 },
+                },
+                {
+                    function()
+                        return navic.get_location()
+                    end,
+                    cond = function()
+                        return navic.is_available()
+                    end,
+                    color = {
+                        gui = 'italic'
+                    }
+                },
+            },
         },
         inactive_sections = {
             -- these are to remove the defaults
@@ -97,8 +109,8 @@ local function load()
         function()
             return '▊'
         end,
-        color = { fg = colors.blue },      -- Sets highlighting of component
-        padding = { left = 0, right = 1 }, -- We don't need space before this
+        color = { fg = colors.blue },
+        padding = { left = 0, right = 1 },
     }
 
     ins_left {
@@ -164,12 +176,8 @@ local function load()
     }
 
     ins_left {
-        'filename',
-        cond = conditions.buffer_not_empty,
-        color = { fg = colors.magenta, gui = 'bold' },
+        'location',
     }
-
-    ins_left { 'location' }
 
     ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
 
@@ -209,7 +217,10 @@ local function load()
             end
             return msg
         end,
-        icon = ' LSP:',
+        cond = function()
+            return (next(vim.lsp.get_clients()) ~= nil)
+        end,
+        icon = 'LSP:',
         color = { fg = '#e4e4e4', gui = 'bold' },
     }
 

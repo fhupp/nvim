@@ -109,7 +109,7 @@ end
 --- @param file string
 --- @return string
 local function shorten_path(file)
-    return file:sub(file:match("(.*/)(.*/)"):len(), file:len())
+    return file:sub(file:match("(.*/)"):len() + 1, file:len())
 end
 
 --- @param file string
