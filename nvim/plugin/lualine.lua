@@ -50,6 +50,12 @@ local function load()
                 normal = { c = { fg = colors.fg, bg = colors.bg } },
                 inactive = { c = { fg = colors.fg, bg = colors.bg } },
             },
+
+            disabled_filetypes = {
+              winbar = {
+                "neo-tree",
+              },
+            },
         },
         sections = {
             -- these are to remove the defaults

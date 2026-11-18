@@ -19,7 +19,7 @@ if vim.g.neovide then
     header_text = {
         " NEO                   ",
         "    VIsual extendeD ed ",
-        "             improvEd   ",
+        "             improvEd  ",
     }
 end
 
@@ -155,7 +155,7 @@ end
 
 --- @param items_number number?
 --- @param opts table?
-local function git_mru(start, items_number, cwd, opts)
+local function git_files(start, items_number, cwd, opts)
     opts = opts or mru_opts
     items_number = items_number or 10
     local found = utils.get_git_files(cwd, items_number, opts.ignore)
@@ -220,7 +220,7 @@ local startpage = {
         {
             type = "group",
             val = function()
-                return { git_mru(0, 10) }
+                return { git_files(0, 10) }
             end,
         },
     },

@@ -5,6 +5,9 @@ local opt = vim.o
 local lsp = vim.lsp
 local api = vim.api
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
 
 opt.number = true
@@ -64,9 +67,9 @@ vim.diagnostic.config({
 })
 
 if vim.g.started_by_firenvim then
-    require("firenvim")
+    require("config.firenvim")
 end
 
 if vim.g.neovide then
-    require("neovide")
+    require("config.neovide")
 end
