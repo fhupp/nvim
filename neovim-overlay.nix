@@ -23,7 +23,11 @@ let
 
     tagbar
 
-    hydra-nvim
+    # Keymap handling
+    which-key-nvim
+
+    # Just
+    just-nvim
 
     # Lazy Loading
     lze
@@ -80,6 +84,7 @@ let
 
     # Rust
     crates-nvim
+    nvim-bacon
   ];
 
   extraPackages = with pkgs; [

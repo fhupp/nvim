@@ -14,15 +14,15 @@ opt.number = true
 opt.relativenumber = true
 opt.cursorline = true
 opt.lazyredraw = true
+
+-- Search
 opt.showmatch = true
 opt.incsearch = true
 opt.hlsearch = true
 
+-- Spell Check
 opt.spell = true
 opt.spelllang = 'en'
-
--- Disable spellcheck in the terminal
-api.nvim_create_autocmd("TermOpen", { pattern = "term://*", command = "setlocal nospell" })
 
 opt.expandtab = true
 opt.tabstop = 2
@@ -39,10 +39,12 @@ opt.cmdheight = 1
 
 opt.colorcolumn = '100'
 
+-- Fold
 opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 opt.foldenable = true
 opt.foldcolumn = "1"
 
+-- White-space
 opt.list = true
 opt.listchars = "tab:. ,leadtab:. ,leadmultispace:. ,trail:*"
 
@@ -51,25 +53,38 @@ opt.laststatus = 3
 cmd.filetype('plugin', 'indent', 'on')
 
 lsp.enable({
-    "lua_ls",
-    "nil",
-    "nixd",
-    "haskell-language-server",
-    "rust_analyzer",
-    "crates",
+  "lua_ls",
+  "nil",
+  "nixd",
+  "haskell-language-server",
+  "rust_analyzer",
+  "crates",
 })
 
 lsp.inlay_hint.enable(true)
 
 vim.diagnostic.config({
-    severity_sort = true,
-    virtual_text = true,
+  severity_sort = true,
+  virtual_text = true,
 })
 
+require("config.keymap")
+require("config.terminal")
+
 if vim.g.started_by_firenvim then
-    require("config.firenvim")
+  require("config.firenvim")
 end
 
 if vim.g.neovide then
-    require("config.neovide")
+  require("config.neovide")
 end
+
+-- ---@param ev vim.api.keyset.create_autocmd.callback_args
+-- local function pre_save_buf(ev)
+--   vim.lsp.buf.format({ async = false })
+-- end
+--
+-- api.nvim_create_autocmd('BufWritePre', {
+--   desc = "Format buffer before writing it (LSP)",
+--   callback = pre_save_buf,
+-- })
